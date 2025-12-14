@@ -25,10 +25,11 @@ Cent 是一个 **完全免费、开源的多人协作记账 Web App**，
 - 🖼️ **导入导出**：自由导入和导出账单数据，摆脱数据焦虑，支持微信/支付宝账单导入
 - ⚡️ **增量同步**：只上传/下载变更数据，大幅缩短同步时间。  
 - 📊 **丰富的统计分析**：支持多维度筛选与走势分析，可自定义分析视图。  
-- 🏷️ **分类与标签系统**：支持二级分类、自定义标签、图标、排序。  
-- 💰 **预算管理**：按分类或标签设置预算并实时监控进度。  
-- 🖼️ **附件支持**：可为账单上传图片附件。  
-- 📱 **PWA 支持**：可安装到桌面，像原生 App 一样使用，支持 iOS 与 Android。  
+- 🏷️ **分类与标签系统**：支持二级分类、自定义标签、图标、排序。
+- 💰 **预算管理**：按分类或标签设置预算并实时监控进度。
+- 🖼️ **附件支持**：可为账单上传图片附件。
+- 📱 **PWA 支持**：可安装到桌面，像原生 App 一样使用，支持 iOS 与 Android。
+- 📴 **安卓离线**：安卓端默认将账本数据保存到本地，无需登录或联网即可使用。
 - 🔒 **完全开源**：部署成本几乎为零，代码完全可审计、可自建。
 
 ---
@@ -195,10 +196,11 @@ which uses a **GitHub Repository** for data synchronization and version control,
 - 👥 **Multi-User Collaboration**: Share ledgers and synchronize changes in real-time using the GitHub Collaborator feature.  
 - ⚡️ **Incremental Sync**: Only uploads/downloads changed data, significantly reducing sync time.  
 - 📊 **Rich Statistical Analysis**: Supports multi-dimensional filtering and trend analysis, with customizable analysis views.  
-- 🏷️ **Category and Tag System**: Supports two-level categories, custom tags, icons, and sorting.  
-- 💰 **Budget Management**: Set budgets by category or tag and monitor progress in real-time.  
-- 🖼️ **Attachment Support**: Allows uploading image attachments for bills.  
-- 📱 **PWA Support**: Can be installed to the desktop and used like a native App, supported on iOS and Android.  
+- 🏷️ **Category and Tag System**: Supports two-level categories, custom tags, icons, and sorting.
+- 💰 **Budget Management**: Set budgets by category or tag and monitor progress in real-time.
+- 🖼️ **Attachment Support**: Allows uploading image attachments for bills.
+- 📱 **PWA Support**: Can be installed to the desktop and used like a native App, supported on iOS and Android.
+- 📴 **Android Offline**: Android stores ledger data locally by default, so you can use Cent without signing in or connecting to GitHub.
 - 🔒 **Completely Open Source**: Deployment cost is nearly zero, the code is fully auditable and can be self-hosted.
 
 ---

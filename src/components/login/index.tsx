@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { useShallow } from "zustand/shallow";
 import { useIntl } from "@/locale";
 import { useIsLogin, useUserStore } from "@/store/user";
+import { isAndroidDevice } from "@/utils/device";
 
 const loaded = import("@/api/storage");
 
@@ -20,6 +21,7 @@ const betaClassName = `relative after:content-['beta'] after:rounded after:bg-ye
 export default function Login() {
     const t = useIntl();
     const isLogin = useIsLogin();
+    const isAndroid = isAndroidDevice();
     const [loading] = useUserStore(
         useShallow((state) => {
             return [state.loading];
@@ -42,95 +44,111 @@ export default function Login() {
                             </div>
                         ) : (
                             <>
-                                {/* Github */}
-                                <div className="flex flex-col gap-1">
-                                    <button
-                                        type="button"
-                                        className={`${primaryButtonStyle}`}
-                                        onClick={async () => {
-                                            const StorageAPI =
-                                                await loadStorageAPI();
-                                            StorageAPI.loginWith("github");
-                                        }}
-                                    >
-                                        <i className="icon-[mdi--github]"></i>
-                                        <div className="flex-1">
-                                            {t("login-to-github")}
+                                {isAndroid ? (
+                                    <div className="flex flex-col gap-3 items-center text-center text-sm text-muted-foreground px-4">
+                                        <div>{t("android-offline-tip")}</div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        {/* Github */}
+                                        <div className="flex flex-col gap-1">
+                                            <button
+                                                type="button"
+                                                className={`${primaryButtonStyle}`}
+                                                onClick={async () => {
+                                                    const StorageAPI =
+                                                        await loadStorageAPI();
+                                                    StorageAPI.loginWith(
+                                                        "github",
+                                                    );
+                                                }}
+                                            >
+                                                <i className="icon-[mdi--github]"></i>
+                                                <div className="flex-1">
+                                                    {t("login-to-github")}
+                                                </div>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="underline text-xs cursor-pointer"
+                                                onClick={async () => {
+                                                    const StorageAPI =
+                                                        await loadStorageAPI();
+                                                    StorageAPI.loginManuallyWith(
+                                                        "github",
+                                                    );
+                                                }}
+                                            >
+                                                {t("or-use-an-exist-token")}
+                                            </button>
                                         </div>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="underline text-xs cursor-pointer"
-                                        onClick={async () => {
-                                            const StorageAPI =
-                                                await loadStorageAPI();
-                                            StorageAPI.loginManuallyWith(
-                                                "github",
-                                            );
-                                        }}
-                                    >
-                                        {t("or-use-an-exist-token")}
-                                    </button>
-                                </div>
-                                {/* Gitee */}
-                                <div className="flex flex-col gap-1">
-                                    <button
-                                        type="button"
-                                        className={`${primaryButtonStyle} !bg-[#b7312d] !hover:bg-[#b7312d]/80`}
-                                        onClick={async () => {
-                                            const StorageAPI =
-                                                await loadStorageAPI();
-                                            StorageAPI.loginWith("gitee");
-                                        }}
-                                    >
-                                        <svg
-                                            fill="currentColor"
-                                            width="32"
-                                            height="32"
-                                            viewBox="0 0 24 24"
-                                            role="img"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.63c0 .327.266.592.593.592h5.63c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-4.15a.592.592 0 0 1-.592-.592v-1.482a.593.593 0 0 1 .593-.592h6.815c.327 0 .593.265.593.592v3.408a4 4 0 0 1-4 4H5.926a.593.593 0 0 1-.593-.593V9.778a4.444 4.444 0 0 1 4.445-4.444h8.296z" />
-                                        </svg>
-                                        <div className="flex-1">
-                                            {t("login-to-gitee")}
+                                        {/* Gitee */}
+                                        <div className="flex flex-col gap-1">
+                                            <button
+                                                type="button"
+                                                className={`${primaryButtonStyle} !bg-[#b7312d] !hover:bg-[#b7312d]/80`}
+                                                onClick={async () => {
+                                                    const StorageAPI =
+                                                        await loadStorageAPI();
+                                                    StorageAPI.loginWith(
+                                                        "gitee",
+                                                    );
+                                                }}
+                                            >
+                                                <svg
+                                                    fill="currentColor"
+                                                    width="32"
+                                                    height="32"
+                                                    viewBox="0 0 24 24"
+                                                    role="img"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.63c0 .327.266.592.593.592h5.63c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-4.15a.592.592 0 0 1-.592-.592v-1.482a.593.593 0 0 1 .593-.592h6.815c.327 0 .593.265.593.592v3.408a4 4 0 0 1-4 4H5.926a.593.593 0 0 1-.593-.593V9.778a4.444 4.444 0 0 1 4.445-4.444h8.296z" />
+                                                </svg>
+                                                <div className="flex-1">
+                                                    {t("login-to-gitee")}
+                                                </div>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="underline text-xs cursor-pointer"
+                                                onClick={async () => {
+                                                    const StorageAPI =
+                                                        await loadStorageAPI();
+                                                    StorageAPI.loginManuallyWith(
+                                                        "gitee",
+                                                    );
+                                                }}
+                                            >
+                                                {t("or-use-an-exist-token")}
+                                            </button>
                                         </div>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="underline text-xs cursor-pointer"
-                                        onClick={async () => {
-                                            const StorageAPI =
-                                                await loadStorageAPI();
-                                            StorageAPI.loginManuallyWith(
-                                                "gitee",
-                                            );
-                                        }}
-                                    >
-                                        {t("or-use-an-exist-token")}
-                                    </button>
-                                </div>
-                                {/* Web DAV */}
-                                <div>
-                                    <button
-                                        type="button"
-                                        className={`${secondaryButtonStyle} ${betaClassName}`}
-                                        onClick={async () => {
-                                            const StorageAPI =
-                                                await loadStorageAPI();
-                                            StorageAPI.loginWith("webdav");
-                                        }}
-                                    >
-                                        <i className="icon-[mdi--floppy-disk]"></i>
-                                        <div className="flex-1">Web DAV</div>
-                                    </button>
-                                </div>
+                                        {/* Web DAV */}
+                                        <div>
+                                            <button
+                                                type="button"
+                                                className={`${secondaryButtonStyle} ${betaClassName}`}
+                                                onClick={async () => {
+                                                    const StorageAPI =
+                                                        await loadStorageAPI();
+                                                    StorageAPI.loginWith(
+                                                        "webdav",
+                                                    );
+                                                }}
+                                            >
+                                                <i className="icon-[mdi--floppy-disk]"></i>
+                                                <div className="flex-1">
+                                                    Web DAV
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
                                 {/* Offline */}
                                 <div>
                                     <button
                                         type="button"
-                                        className={`${secondaryButtonStyle} !w-full`}
+                                        className={`${isAndroid ? primaryButtonStyle : secondaryButtonStyle} !w-full`}
                                         onClick={async () => {
                                             const StorageAPI =
                                                 await loadStorageAPI();
