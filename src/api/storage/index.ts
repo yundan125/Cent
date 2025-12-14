@@ -1,5 +1,6 @@
 import { wrap } from "comlink";
 import modal from "@/components/modal";
+import { isAndroidDevice } from "@/utils/device";
 import { EmptyEndpoint } from "../endpoints/empty";
 import { GiteeEndpoint } from "../endpoints/gitee";
 import { GithubEndpoint } from "../endpoints/github";
@@ -16,8 +17,26 @@ const APIS = {
 };
 
 const SYNC_ENDPOINT_KEY = "SYNC_ENDPOINT";
-const type = (localStorage.getItem(SYNC_ENDPOINT_KEY) ??
-    "github") as keyof typeof APIS;
+const resolveEndpointType = () => {
+    try {
+        if (isAndroidDevice()) {
+            localStorage.setItem(SYNC_ENDPOINT_KEY, "offline");
+            return "offline" as const;
+        }
+        const stored = localStorage.getItem(SYNC_ENDPOINT_KEY);
+        if (stored && stored in APIS) {
+            return stored as keyof typeof APIS;
+        }
+    } catch (error) {
+        console.warn(
+            "Failed to resolve sync endpoint, fallback to github",
+            error,
+        );
+    }
+    return "github" as const;
+};
+
+const type = resolveEndpointType();
 
 const _StorageAPI = APIS[type] ?? EmptyEndpoint;
 const actions = _StorageAPI.init();

@@ -311,6 +311,7 @@
   "parent-category": "Parent",
   "no-parent-category": "No parent",
   "offline-mode": "Offline Mode",
+  "android-offline-tip": "Android uses local storage by default. No GitHub connection or sign-in is required.",
   "please-input-book-name": "please input book name(only EN letters & number allowed, no special characters):",
   "input-tag-name": "input tag name",
   "please-enter-nickname": "Please enter a new custom nickname",
